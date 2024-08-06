@@ -6,7 +6,9 @@
     margin: 0;
     box-sizing: border-box;
   }
-  h2, p{
+
+  h2,
+  p {
     font-size: 14px;
     color: white;
   }
@@ -26,7 +28,8 @@
     border-radius: 5px;
     width: 100%;
   }
-  .submit-button{
+
+  .submit-button {
     margin-top: 40px;
     padding: 10px;
     border-radius: 5px;
@@ -49,7 +52,8 @@
 </head>
 
 <body style='width: 100%; height: 100vh; background-color: #09090B; margin: 0; padding: 0;'>
-  <form style='width: 500px; margin: 0 auto; display: flex; justify-content: center; align-items: center; flex-direction: column; background-color: #27272A; margin-top: 200px; padding: 20px; border-radius: 10px;'>
+  <form
+    style='width: 500px; margin: 0 auto; display: flex; justify-content: center; align-items: center; flex-direction: column; background-color: #27272A; margin-top: 200px; padding: 20px; border-radius: 10px;'>
     <div style='width: 100%;'>
       <label for="">Busqueda</label>
       <input type="text" id="search" name="search">
@@ -63,37 +67,45 @@
 </body>
 
 <script>
-  const search = document.getElementById('search');
-  const button = document.querySelector('.submit-button');
+  const search = document.getElementById('search')
+  const button = document.querySelector('.submit-button')
 
-  button.addEventListener('click', ( e) => {
+  button.addEventListener('click', (e) => {
     e.preventDefault()
-    const value = search.value;
-    fetch(`http://localhost:3000/api/data`)
+    const value = search.value
+    fetch(`http://localhost:3000/api/data?query=${value}`)
       .then(response => response.json())
       .then(data => {
-        console.log(data);
-        const productsDiv = document.getElementById('products');
-        data.forEach(product => {
-          const productElement = document.createElement('div');
-          productElement.style = `
+        console.log(data)
+        console.log(typeof data[0])
+        if (typeof data[0] != 'string') {
+          const productsDiv = document.getElementById('products')
+          data.forEach(product => {
+            const productElement = document.createElement('div')
+            productElement.style = `
             background-color: #27272A;
             padding: 20px;
             margin: 10px;
             border-radius: 10px;
-          `;
-          productElement.innerHTML = `
+          `
+            productElement.innerHTML = `
             <h2>${product.title}</h2>
             <p>${product.description}</p>
             <p>Precio: $${product.price}</p>
             <img src="${product.image}" alt="${product.title}" width="100">
-          `;
-          productsDiv.appendChild(productElement);
-        });
+          `
+            productsDiv.appendChild(productElement)
+          })
+        }
+        else {
+
+        }
+
       })
       .catch(error => {
-        console.error('Error:', error);
-      });
+        console.error('Error:', error)
+      })
   });
 </script>
+
 </html>
