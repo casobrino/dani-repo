@@ -72,6 +72,8 @@
 
   button.addEventListener('click', (e) => {
     e.preventDefault()
+    const productsDiv = document.getElementById('products')
+    productsDiv.innerHTML = ''
     const value = search.value
     fetch(`http://localhost:3000/api/data?query=${value}`)
       .then(response => response.json())
@@ -98,7 +100,20 @@
           })
         }
         else {
-
+          const productsDiv = document.getElementById('products')
+          data.forEach(product => {
+            const productElement = document.createElement('div')
+            productElement.style = `
+            background-color: #27272A;
+            padding: 20px;
+            margin: 10px;
+            border-radius: 10px;
+          `
+            productElement.innerHTML = `
+            <h2>${product}</h2>
+          `
+            productsDiv.appendChild(productElement)
+          })
         }
 
       })
