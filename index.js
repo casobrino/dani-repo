@@ -17,8 +17,7 @@ app.get("/", (req, res) => {
 })
 
 app.get("/api/data", async (req, res) => {
-  const query = req.query.query // Recuperar el parámetro 'query' de la URL
-  console.log(`Query recibido: ${query}`)
+  const query = req.query.query
 
   try {
     if (query == null || query == "") {
